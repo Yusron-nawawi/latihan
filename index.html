@@ -52,12 +52,93 @@
                     <input type="tel" id="phone" class="form-input">
                 </div>
                 <div class="form-group">
+                    <label for="umur" class="form-label">Umur</label>
+                    <input type="number" id="umur"class="form-input">
+                </div>
+                <div class="form-group">
                     <label for="messages" class="form-label">Pesan:</label>
                     <textarea id="messages" class="form-textarea" rows="4" cols="50"></textarea>
                 </div>
                 <button type="submit" class="form-button">Kirim</button>
             </form>
         </section>
-    </div>
+    <script>
+    // Fungsi ubah teks saat tombol diklik
+    function ubahTeks() {
+        document.getElementById("output").innerText = "Tombol sudah diklik!";
+    }
+
+    // Event listener untuk form #form (yang paling bawah)
+    document.getElementById("form").addEventListener("submit", function (e) {
+        e.preventDefault();
+        let nama = document.getElementById("nama").value;
+        alert("Helo " + nama);
+    });
+
+    // Fungsi validasi untuk form kontak
+    document.querySelector(".contact-form").addEventListener("submit", function (e) {
+        e.preventDefault(); // Cegah pengiriman form
+
+        // Ambil nilai input
+        let name = document.getElementById("name").value.trim();
+        let email = document.getElementById("email").value.trim();
+        let phone = document.getElementById("phone").value.trim();
+        let message = document.getElementById("messages").value.trim();
+
+        // Hapus pesan error lama
+        document.querySelectorAll(".error").forEach(el => el.remove());
+
+        let valid = true;
+
+        // Validasi Nama
+        if (name === "") {
+            showError("name", "Nama wajib diisi");
+            valid = false;
+        }
+
+        // Validasi Email
+        if (email === "") {
+            showError("email", "Email wajib diisi");
+            valid = false;
+        } else if (!validateEmail(email)) {
+            showError("email", "Format email tidak valid");
+            valid = false;
+        }
+
+        // Validasi No. Telepon
+        if (phone === "") {
+            showError("phone", "Nomor telepon wajib diisi");
+            valid = false;
+        }
+
+        // Validasi Pesan
+        if (message === "") {
+            showError("messages", "Pesan wajib diisi");
+            valid = false;
+        }
+
+        if (valid) {
+            alert("Halo " + name + ", pesan Anda berhasil dikirim!");
+            // Reset form jika diperlukan
+            this.reset();
+        }
+    });
+
+    // Fungsi menampilkan error
+    function showError(inputId, message) {
+        let input = document.getElementById(inputId);
+        let error = document.createElement("small");
+        error.innerText = message;
+        error.classList.add("error");
+        error.style.color = "red";
+        input.parentElement.appendChild(error);
+    }
+
+    // Fungsi validasi email
+    function validateEmail(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
+</script>
 </body>
 </html>

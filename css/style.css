@@ -250,3 +250,8 @@ header {
     padding: 10px 0;
   }
 }
+.error {
+    font-size: 0.8em;
+    margin-top: 5px;
+    display: block;
+}
